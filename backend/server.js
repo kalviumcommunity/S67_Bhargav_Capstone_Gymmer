@@ -1,18 +1,18 @@
-// const express = require("express");
-// const connectDB = require("./config/db");
-// require('dotenv').config();
+const express = require("express");
+const connectDB = require("./config/db");
+require('dotenv').config();
 
-// const app = express();
-// app.use(express.json());
+const app = express();
+app.use(express.json());
 
-// const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
-// app.get('/',(req,res)=>{
-//     res.send("Welcome to Gymmer 💪");
-// });
+app.get('/',(req,res)=>{
+    res.send("Welcome to Gymmer 💪");
+});
 
-// connectDB();
+connectDB();
 
-// app.listen(PORT,()=>{
-//     console.log(`server is running on http://localhost:${PORT}`)
-// })
+app.listen(PORT,()=>{
+    console.log(`server is running on http://localhost:${PORT}`)
+})
