@@ -9,8 +9,10 @@ function validatePassword(value) {
   }
   
 
-const userSchema = new mongoose.Schema({
-    name: {type: String, maxlength: 25, required: true },
+const ownerSchema = new mongoose.Schema({    
+    userName: {type: String, maxlength: 25, required: true, unique: true},
+    name: {type: String, maxlength: 25, required: true},
+    phoneNumber: {type: String, match: [/^[6-9]\d{9}$/, 'Please enter a valid 10-digit phone number'], required: true, unique: true},
     email: {type: String, required: [true, 'Email is required'], unique: true, match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email']},
     password: {
         type: String, required: [true,'password is required'], minlength: 8,
@@ -20,4 +22,4 @@ const userSchema = new mongoose.Schema({
     bio: {type: String,minlength: [10,'minimum 10 characters'], maxlength: [200,'maximum limit Exceeded']}
 })
 
-module.exports = mongoose.model("user",userSchema);
+module.exports = mongoose.model("owner",ownerSchema);
