@@ -15,8 +15,15 @@ app.post('/signup', async(req,res)=>{
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await new user({ name, email, password: hashedPassword, bio, profilePic }).save();
-        res.status(201).json({message: "User is successfully created!"});
+        const newUser = await new user({ name, email, password: hashedPassword, bio, profilePic }).save();
+
+        const token = jwt.sign(
+            { id: newUser._id, name: newUser.name },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRE }
+          );
+
+        res.status(201).json({message: `Hello ${name}, User is successfully created!`},token);
     }
     catch(err){
         console.error(err);
