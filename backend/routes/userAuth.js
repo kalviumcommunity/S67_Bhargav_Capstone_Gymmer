@@ -23,9 +23,11 @@ app.post('/signup', async(req,res)=>{
             { id: newUser._id, name: newUser.name },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRE }
-          );
+        );
 
-        res.status(201).json({message: `Hello ${newUser.name}, User is successfully created!`},token);
+        res.status(201)
+           .header("Authorization", `Bearer ${token}`)
+           .json({message: `Hello ${newUser.name}, User is successfully created!`});
     }
     catch(err){
         console.error(err);
@@ -45,18 +47,34 @@ app.post('/login', async(req,res)=>{
     if(!matchPassword) return res.status(400).json({message: "Incorrect password!"});
 
     const token = jwt.sign(
-        { id: userExists._id, name: userExist.name },
+        { id: userExists._id, name: userExists.name },
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_EXPIRE }
-      );
+    );
 
-      res.status(200)
-        .header("Authorization", `Bearer ${token}`)
-        .json({ message: `Hello ${userExists.name},Welcome to Gymmer 💪`});   
+    res.status(200)
+       .header("Authorization", `Bearer ${token}`)
+       .json({ message: `Hello ${userExists.name},Welcome to Gymmer 💪`});   
+});
+
+app.put('/update', verifyToken, async (req, res) => {
+  const { name, bio, profilePic } = req.body;
+
+  try {
+    const updatedUser = await user.findByIdAndUpdate(
+      req.user.id,
+      { name, bio, profilePic },
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({ message: `Profile updated for ${updatedUser.name}` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 app.get("/profile", verifyToken, (req, res) => {
     res.status(200).json({ message: `Welcome, ${req.user.name}` });
-  });
+});
 
 module.exports = app;
