@@ -52,7 +52,7 @@ app.post('/login', async(req,res)=>{
 
       res.status(200)
         .header("Authorization", `Bearer ${token}`)
-        .json({ message: `Hello ${userExists.name}`});   
+        .json({ message: `Hello ${userExists.name},Welcome to Gymmer 💪`});   
 });
 
 app.get("/profile", verifyToken, (req, res) => {
