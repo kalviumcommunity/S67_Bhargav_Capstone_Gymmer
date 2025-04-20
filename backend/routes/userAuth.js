@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const user = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-// const verifyToken = require("../middlewares/authMiddleware");
+const verifyToken = require("../middlewares/authMiddleware");
 
 const app = express.Router();
 
@@ -19,14 +19,14 @@ app.post('/signup', async(req,res)=>{
 
         const newUser = await new user({ name, email, password: hashedPassword, bio, profilePic }).save();
 
-        // const token = jwt.sign(
-        //     { id: newUser._id, name: newUser.name },
-        //     process.env.JWT_SECRET,
-        //     { expiresIn: process.env.JWT_EXPIRE }
-        // );
+        const token = jwt.sign(
+            { id: newUser._id, name: newUser.name },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRE }
+        );
 
         res.status(201)
-          //  .header("Authorization", `Bearer ${token}`)
+           .header("Authorization", `Bearer ${token}`)
            .json({message: `Hello ${newUser.name}, User is successfully created!`});
     }
     catch(err){
@@ -46,35 +46,35 @@ app.post('/login', async(req,res)=>{
     const matchPassword = await bcrypt.compare(password, userExists.password);
     if(!matchPassword) return res.status(400).json({message: "Incorrect password!"});
 
-    // const token = jwt.sign(
-    //     { id: userExists._id, name: userExists.name },
-    //     process.env.JWT_SECRET,
-    //     { expiresIn: process.env.JWT_EXPIRE }
-    // );
+    const token = jwt.sign(
+        { id: userExists._id, name: userExists.name },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRE }
+    );
 
     res.status(200)
-      //  .header("Authorization", `Bearer ${token}`)
+       .header("Authorization", `Bearer ${token}`)
        .json({ message: `Hello ${userExists.name},Welcome to Gymmer 💪`});   
 });
 
-// app.put('/update', verifyToken, async (req, res) => {
-//   const { name, bio, profilePic } = req.body;
+app.put('/update', verifyToken, async (req, res) => {
+  const { name, bio, profilePic } = req.body;
 
-//   try {
-//     const updatedUser = await user.findByIdAndUpdate(
-//       req.user.id,
-//       { name, bio, profilePic },
-//       { new: true, runValidators: true }
-//     );
+  try {
+    const updatedUser = await user.findByIdAndUpdate(
+      req.user.id,
+      { name, bio, profilePic },
+      { new: true, runValidators: true }
+    );
 
-//     res.status(200).json({ message: `Profile updated for ${updatedUser.name}` });
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
+    res.status(200).json({ message: `Profile updated for ${updatedUser.name}` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
-// app.get("/profile", verifyToken, (req, res) => {
-//     res.status(200).json({ message: `Welcome, ${req.user.name}` });
-// });
+app.get("/profile", verifyToken, (req, res) => {
+    res.status(200).json({ message: `Welcome, ${req.user.name}` });
+});
 
 module.exports = app;
