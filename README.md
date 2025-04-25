@@ -1,1 +1,5 @@
-GymBro is a fitness platform that lets users find and book short-term gym passes while traveling. It connects gym-goers with local gyms offering flexible plans. Gym owners can list their facilities and manage bookings easily through a separate dashboard. 💪📍
+## READ AND WRITE IMPLEMENTED
+
+## GET AND POST API USED IN `reviewRoutes.js` and `gymRoutes.js`
+  - Used `POST API` to allow users to post reviews.
+  - Used `GET API` to fetch all the gyms and their reviews. 
