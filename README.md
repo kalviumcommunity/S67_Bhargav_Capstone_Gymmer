@@ -1,1 +1,4 @@
-GymBro is a fitness platform that lets users find and book short-term gym passes while traveling. It connects gym-goers with local gyms offering flexible plans. Gym owners can list their facilities and manage bookings easily through a separate dashboard. 💪📍
+## GET-API Used
+  - Used Get API in Server.js to display a welcome message in the HomePage.
+  - Used Get API in UserAuth.js to get user profile.
+  - Used Middleware to verify the token before getting the User Profile.
