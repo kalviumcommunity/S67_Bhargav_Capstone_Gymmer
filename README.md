@@ -1,1 +1,6 @@
-GymBro is a fitness platform that lets users find and book short-term gym passes while traveling. It connects gym-goers with local gyms offering flexible plans. Gym owners can list their facilities and manage bookings easily through a separate dashboard. 💪📍
+## Initialising Frontend
+
+## Creating A React App with the Latest Vite Model
+  - In the Terminal I ran the command "npm install vite@latest frontend ."
+  - I Chose REACT Framework with JavaScript Variant.
+  - I then installed node modules using npm install command
