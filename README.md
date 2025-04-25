@@ -1,1 +1,7 @@
-GymBro is a fitness platform that lets users find and book short-term gym passes while traveling. It connects gym-goers with local gyms offering flexible plans. Gym owners can list their facilities and manage bookings easily through a separate dashboard. 💪📍
+## Database-Schema-Completion
+
+## Established Relationship between two entities.
+  - Created gymModel.js , ownerModel.js, reviewModel.js.
+  - Connected gymModel with ownerModel and reviewModel.
+  - Connected reviewModel with UserModel.
+  - Used "mongoose.Schema.Types.ObjectID" and "ref" to interconnect the models.
